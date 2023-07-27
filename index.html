@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="width">
+            <label class="logo"><a href ="index.html">[George's Portfolio]</a></label>
+            <ul>
+                <li><a href="aboutme.html">&nbspAbout Me&nbsp</a></li>
+                <li><a href="projects.html">&nbspProjects&nbsp</a></li>
+                <li><a href="coding.html">&nbspCoding Challenges&nbsp</a></li>                
+                <li><a href="contact.html">&nbspContact&nbsp</a></li>
+            </ul>
+          </div>
+    </nav>
+
+
+<div id="location">
+    <h1>Programmer.</h1>
+</div>
+
+
+<div class = "width">
+<div id = "picture">
+    <img id='pic' src='data:image/png;base64, ' />
+</div>
+</div>
+
+
+
+
+<div id = "blocation", id="">
+    <button onclick="myFunction()", id="button">&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+<script>
+
+        const uri = 'http://18.188.252.70/parse/classes/Greenhouse/CukTtkNoFt';
+
+        var i;
+        var xray2;
+
+        let num1 = 1;
+        let num2 = 0;
+
+        let _data1 = {
+            lightOnOff: num1
+        };
+
+        let _data2 = {
+            lightOnOff: 0,
+            index: 2
+        };
+
+        let h = new Headers();
+        h.append('X-Parse-Application-Id', 'myappID');
+        h.append('Content-Type', 'application/json');
+
+        let getty = new Request(uri, {
+            method: 'GET',
+            headers: h,
+            mode: 'cors'
+
+        });
+
+        let posty1 = new Request(uri, {
+            method: 'POST',
+            headers: h,
+            body: JSON.stringify(_data1)
+
+        });
+
+        let posty2 = new Request(uri, {
+            method: 'POST',
+            headers: h,
+            body: JSON.stringify(_data2)
+
+        });
+
+        function getPosts() {
+            fetch(getty)
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Bad HTTP stuff');
+                    }
+                })
+                .then((jsonData) => {
+                    console.log(jsonData);
+                    xray = jsonData.index;
+                    xray2 = jsonData.lightOnOff;
+                    pic = jsonData.pic;
+                    if (xray2 == 1) { document.getElementById("button").innerHTML = "ON"; }
+                    else { document.getElementById("button").innerHTML = "OFF"; }
+
+                    document.getElementById('pic').setAttribute('src', 'data: image / png; base64, ' + pic)
+                    //document.getElementById('index').setAttribute('index', index)
+
+                    //document.getElementById("demo").innerHTML = xray2;
+                })
+                .catch((err) => {
+                    console.log('ERROR:', err.message);
+                });
+
+
+        }
+
+
+        function myFunction() {
+
+
+            if (xray2 == 1) {
+                // POST request using fetch()
+                fetch("http://18.188.252.70/parse/classes/Greenhouse/CukTtkNoFt", {
+
+                    // Adding method type
+                    method: "PUT",
+
+                    // Adding body or contents to send
+                    body: JSON.stringify({
+                        index: 2,
+                        lightOnOff: 0
+                    }),
+
+                    // Adding headers to the request
+                    headers: {
+                        'X-Parse-Application-Id': 'myappID'
+                    }
+                })
+
+                    // Converting to JSON
+                    .then(response => response.json())
+
+                    // Displaying results to console
+                    .then(json => console.log(json));
+
+
+            } else {
+
+                // POST request using fetch()
+                fetch("http://18.188.252.70/parse/classes/Greenhouse/CukTtkNoFt", {
+
+                    // Adding method type
+                    method: "PUT",
+
+                    // Adding body or contents to send
+                    body: JSON.stringify({
+                        index: 2,
+                        lightOnOff: 1
+                    }),
+
+                    // Adding headers to the request
+                    headers: {
+                        'X-Parse-Application-Id': 'myappID'
+                    }
+                })
+
+                    // Converting to JSON
+                    .then(response => response.json())
+
+                    // Displaying results to console
+                    .then(json => console.log(json));
+            }
+
+            
+
+        }
+
+
+        var timer = setInterval(getPosts, 500)
+        getPosts();
+
+
+
+
+
+</script>
+</body>
+</html>
